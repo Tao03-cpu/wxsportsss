@@ -1,0 +1,50 @@
+{
+  "entryPagePath": "pages/index/index",
+  "pages": [
+    "pages/index/index",
+    "pages/community/community",
+    "pages/sports/sports",
+    "pages/mine/mine",
+    "pages/list/list"
+  ],
+  "window": {
+    "navigationBarTitleText": "燃动部落",
+    "navigationBarBackgroundColor": "#f3514f",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#efefef"
+  },
+  "tabBar": {
+    "selectedColor": "#f3514f",
+    "color": "#666",
+    "list":[
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "/assets/tabbar/index.png",
+        "selectedIconPath": "/assets/tabbar/index-active.png"
+      },
+      {
+        "text": "社区",
+        "pagePath": "pages/community/community",
+        "iconPath": "/assets/tabbar/community.png",
+        "selectedIconPath": "/assets/tabbar/community-active.png"
+      },
+      {
+        "text": "运动",
+        "pagePath": "pages/sports/sports",
+        "iconPath": "/assets/tabbar/sports.png",
+        "selectedIconPath": "/assets/tabbar/sport-active.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/mine/mine",
+        "iconPath": "/assets/tabbar/mine.png",
+        "selectedIconPath": "/assets/tabbar/mine-active.png"
+      }
+
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

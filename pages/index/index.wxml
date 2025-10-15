@@ -1,0 +1,156 @@
+<!-- view 小程序提供的容器组件，可以直接当成div使用 -->
+
+<!-- 轮播图区域  -->
+  <!--autoplay:自动播放 circular：第三张切到第一张  intercal：切换时间-->
+  <!-- indicator-dots：小黑点   indicator：颜色-->
+<view class="swiper">
+  <swiper 
+  autoplay 
+  circular
+  interval="2000" 
+  indicator-dots 
+  indicator-color="#efff"
+  indicator-active-color="#f3514f"
+  >
+
+    <swiper-item>
+      <image src="../../assets/banner/banner-1.png" mode="" />
+    </swiper-item>
+
+    <swiper-item>
+      <image src="../../assets/banner/banner-2.png" mode="" />
+    </swiper-item>
+
+    <swiper-item>
+      <image src="../../assets/banner/banner-3.png" mode="" />
+    </swiper-item>
+  </swiper>
+</view>
+
+
+<!-- 公司信息 -->
+<view class="info">
+<text user-select space="emsp">   欢 迎 使 用 燃 动 部 落</text>
+</view>
+
+
+<!-- 运动导航 -->
+<view class="good-nav">
+  <!-- 推荐按钮，点击时传递 data-tab="recommend" -->
+  <view bindtap="changeTab" data-tab="recommend">
+    <image src="../../assets/category/recommend.png" />
+    <text>推荐</text>
+  </view>
+
+  <!-- 跑步按钮 -->
+  <view bindtap="changeTab" data-tab="running">
+    <image src="../../assets/category/running.png" />
+    <text>跑步</text>
+  </view>
+
+  <!-- 骑行按钮 -->
+  <view bindtap="changeTab" data-tab="riding">
+    <image src="../../assets/category/riding.png" />
+    <text>骑行</text>
+  </view>
+
+  <!-- 健身按钮 -->
+  <view bindtap="changeTab" data-tab="fitness">
+    <image src="../../assets/category/fitness.png" />
+    <text>健身</text>
+  </view>
+
+  <!-- 瑜伽按钮 -->
+  <view bindtap="changeTab" data-tab="yoga">
+    <image src="../../assets/category/gongfu.png" />
+    <text>瑜伽</text>
+  </view>
+</view>
+
+    
+<!-- 内容区，根据 currentTab 的值决定显示什么 -->
+<!-- <scroll-view class="content" scroll-y="true"> -->
+  <!-- 如果 currentTab 是 recommend，就显示推荐图片 -->
+  <!-- <view wx:if="{{currentTab === 'recommend'}}">
+    <image src="../../assets/tabbar/index-active.png" /> <text>这是推荐</text>
+    <image src="../../assets/tabbar/mine-active.png" />
+    <image src="../../assets/tabbar/mine-active.png" />
+    <image src="../../assets/tabbar/mine-active.png" />
+  </view> -->
+
+  <!-- 如果 currentTab 是 running，就显示跑步视频 -->
+  <!-- <view wx:elif="{{currentTab === 'running'}}">
+    <image src="../../assets/tabbar/sport-active.png"  />
+    <image src="../../assets/tabbar/mine-active.png" />
+  </view> -->
+
+  <!-- 如果 currentTab 是 riding，就显示骑行图片 -->
+  <!-- <view wx:elif="{{currentTab === 'riding'}}">
+    <image src="../../assets/tabbar/index-active.png" />
+    <image src="../../assets/tabbar/sport-active.png"  />
+  </view> -->
+
+  <!-- 如果 currentTab 是 fitness，就显示健身视频 -->
+  <!-- <view wx:elif="{{currentTab === 'fitness'}}">
+    <image src="../../assets/tabbar/index-active.png" />
+    <image src="../../assets/tabbar/community.png" />
+  </view> -->
+
+  <!-- 如果 currentTab 是 yoga，就显示瑜伽图片 -->
+  <!-- <view wx:elif="{{currentTab === 'yoga'}}">
+    <image src="../../assets/tabbar/mine-active.png" />
+  </view>
+</scroll-view> -->
+
+<!-- 推荐商品 -->
+<view class="good-hot"></view>
+<scroll-view class="content" scroll-y="true">
+  <!-- 如果 currentTab 是 recommend，就显示推荐图片 -->
+  <view wx:if="{{currentTab === 'recommend'}}">
+    <image src="../../assets/tabbar/index-active.png" /> <text>这是推荐</text>
+    <image src="../../assets/tabbar/mine-active.png" />
+    <image src="../../assets/tabbar/mine-active.png" />
+    <image src="../../assets/tabbar/mine-active.png" />
+  </view>
+
+  <!-- 如果 currentTab 是 running，就显示跑步视频 -->
+  <view wx:elif="{{currentTab === 'running'}}">
+    <image src="../../assets/tabbar/sport-active.png"  />
+    <image src="../../assets/tabbar/mine-active.png" />
+  </view>
+
+  <!-- 如果 currentTab 是 riding，就显示骑行图片 -->
+  <view wx:elif="{{currentTab === 'riding'}}">
+    <image src="../../assets/tabbar/index-active.png" />
+    <image src="../../assets/tabbar/sport-active.png"  />
+  </view>
+
+  <!-- 如果 currentTab 是 fitness，就显示健身视频 -->
+  <view wx:elif="{{currentTab === 'fitness'}}">
+    <image src="../../assets/tabbar/index-active.png" />
+    <image src="../../assets/tabbar/community.png" />
+  </view>
+
+  <!-- 如果 currentTab 是 yoga，就显示瑜伽图片 -->
+  <view wx:elif="{{currentTab === 'yoga'}}">
+    <image src="../../assets/tabbar/mine-active.png" />
+  </view>
+</scroll-view>
+
+<!-- src:图片资源地址 mode:裁剪，缩放  show-menu-by-longpress:长按显示菜单  -->
+<!-- lazy-load:图片懒加载，在滑动到一定距离以后展示图片 -->
+<!-- <image src="" mode="" show-menu-by-longpress lazy-load /> -->
+
+
+<!-- url 小程序内的跳转 -->
+<!-- 在页面跳转时，需要在路径前面添加/ 斜线，否则跳转不成功  默认navigator不能跳转到tabber页面-->
+<!-- <navigator url="/pages/community/community">到商品列表页面</navigator> -->
+<!-- navigator：只能跳转到非tabbar页面,返回上一页 --> 
+<!-- redirect：只能跳转到非tabbar页面，返回主页 -->
+<!-- switchTab:只能跳转到tabbar页面 -->
+<!-- reLaunch:关闭所有页面，打开小程序中某一个页面 -->
+<!-- navigatorBack:返回上一页 -->
+<!-- <navigator url="/pages/community/community" open-type="reLaunch">到社区页面</navigator> -->
+
+
+

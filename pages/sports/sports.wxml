@@ -1,0 +1,42 @@
+<view class="container">
+  <!-- 顶部运动类型切换 -->
+  <view class="sport-tabs">
+    <view wx:for="{{sports}}" wx:key="index" class="tab {{currentSport === item ? 'active' : ''}}" bindtap="changeSport" data-sport="{{item}}">
+      <text>{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 地图显示 -->
+  <map
+    id="map"
+    class="map"
+    longitude="{{longitude}}"
+    latitude="{{latitude}}"
+    scale="16"
+    polyline="{{polyline}}"
+    enable-3D="true"
+    show-location
+  ></map>
+
+  <!-- 实时数据栏 -->
+  <view class="info-panel">
+    <view class="info-item">
+      <text class="label">时长</text>
+      <text class="value">{{timeDisplay}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">距离</text>
+      <text class="value">{{distance}} km</text>
+    </view>
+    <view class="info-item">
+      <text class="label">配速</text>
+      <text class="value">{{pace}}</text>
+    </view>
+  </view>
+
+  <!-- 控制按钮 -->
+  <view class="go-section">
+    <button wx:if="{{!isRunning}}" class="go-btn" bindtap="startRun">GO</button>
+    <button wx:elif="{{isRunning}}" class="stop-btn" bindtap="endRun">结束</button>
+  </view>
+</view>
