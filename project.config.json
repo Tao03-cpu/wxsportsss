@@ -31,7 +31,11 @@
     "ignore": [],
     "include": []
   },
+  
   "appid": "wx8bab5ec9c455375e",
   "editorSetting": {},
-  "libVersion": "3.10.0"
+  "libVersion": "3.11.2",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "miniprogramRoot": "./"
 }

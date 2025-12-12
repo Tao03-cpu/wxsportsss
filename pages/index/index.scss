@@ -1,92 +1,151 @@
-page {
-    min-height: 100vh;           // 页面撑满视口
-    display: flex;
-    flex-direction: column;
-
-
- }
-//  background-color: #efefef !important;
+/* 页面：首页（index）样式；包含轮播、欢迎语、推荐运动与正确做法分区 */
 
 /* 轮播图样式 */
-.swiper{
-    width: 100%;
-  height: 360rpx;              // 给容器固定高度
-  flex-shrink: 0;              // 不允许被压缩
-
-  swiper{
-    width: 100%;
-    height: 100%;        
-
-    swiper-item{
-
-      image{
-        width: 100%;
-        height: 100%;
-      }
-      //& 在sass中代表的是父系选择器，引用的意思
-      //swiper-item:first-child
-      // &:first-child{
-      //   background-color: lightsalmon;
-      // }
-
-      // &:last-child{
-      //   background-color: lightseagreen;
-      // }
-    }
-  }
-}
-text{
-  font-size: 35rpx;
-  color: rgb(243, 239, 239);
-}
-//公司信息
-.info{
-    flex-shrink: 0;        // 保证不被压缩
-  display: flex;
-  background-color: rgb(58, 54, 54);
-  padding: 16rpx;
-  font-size: 10rpx;
+.banner-swiper {
+  height: 400rpx;
+  width: 100%;
 }
 
-//运动导航
-.good-nav{
-    flex-shrink: 0;              // 保证导航不被压缩
-    display: flex;
-    justify-content: space-between;
-    padding: 40rpx 20rpx;
-    background-color: rgb(240, 254, 255);
-    view{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      
-        image{
-        width: 80rpx;
-        height: 80rpx;
-        }
-        text{
-            font-size: 45rpx;
-            margin-top: 12rpx;
-            color: #000;
-            background-color: azure;
-        }
-    }
+.banner-image {
+  width: 100%;
+  height: 100%;
 }
-.content {
-    width: 100%;
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;              // 自动换行
-    justify-content: space-between;
-    padding: 0 20rpx;
-    box-sizing: border-box;
+
+/* 欢迎语样式 */
+.welcome-section {
+  padding: 40rpx 32rpx;
+  text-align: center;
+  background: rgb(245, 250, 246);
+  margin: 5rpx;
+  // border-radius: 50rpx;
+  // rgb(205, 238, 208);
+}
+
+.welcome-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.welcome-subtitle {
+  font-size: 28rpx;
+  color: #666;
+}
+
+/* 推荐运动区域 */
+.recommend-section {
+  background: rgb(184, 247, 189);
+  // margin: 5rpx;
+  border-radius: 20rpx;
+  padding: 32rpx;
   
-    image {
-      width: 50%;                 // 每行两张图片
-      height: 200rpx;
-    //   margin-bottom: 20rpx;
-      border-radius: 12rpx;
-      object-fit: cover;
-      display: block;
-    }
-  }
+}
+
+.section-header {
+  margin-bottom: 32rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.section-subtitle {
+  font-size: 26rpx;
+  color: #888;
+}
+
+/* 运动列表横向滚动 */
+.sport-list {
+  white-space: nowrap;
+  width: 100%;
+}
+/* 运动（白框大小） */
+.sport-item {
+  display: inline-block;
+  width: 370px;
+  margin-right: 10rpx;
+  background: #f8f9fa;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+
+.sport-image {
+  width: 100%;
+  height: 600rpx;
+  object-fit: cover;   /* 新增 */
+  display: block;      /* 防止行内缝隙 */
+}
+
+
+.sport-info {
+  padding: 10rpx;
+}
+
+.sport-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.sport-desc {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+  white-space: normal;
+}
+
+.sport-tips {
+  font-size: 22rpx;
+  color: #4CAF50;
+  font-weight: 500;
+}
+
+/* 正确做法区域 */
+.technique-section {
+  background: rgb(184, 247, 189);
+  margin: 5rpx;
+  border-radius: 16rpx;
+  padding: 32rpx;
+}
+
+.technique-item {
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.technique-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.technique-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 16rpx;
+}
+
+.technique-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.technique-content {
+  background: white;
+  padding: 20rpx;
+  border-radius: 8rpx;
+}
+
+.technique-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}

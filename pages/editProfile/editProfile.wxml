@@ -1,0 +1,31 @@
+<!-- 修改资料 -->
+<!-- 页面：编辑资料（editProfile） -->
+<view class="container">
+  <view class="profile-card">
+    <view class="profile-item avatar-item" bindtap="changeAvatar">
+      <text class="item-label">头像</text>
+      <image class="avatar" src="{{profile.avatarUrl}}" mode="aspectFill"></image>
+      <text class="arrow">></text>
+    </view>
+
+    <view class="profile-item" bindtap="editField" data-field="nickname">
+      <text class="item-label">昵称</text>
+      <text class="item-value">{{profile.nickname}}</text>
+      <text class="arrow">></text>
+    </view>
+
+    <picker class="profile-item" mode="selector" range="{{genderArray}}" value="{{profile.genderIndex}}" bindchange="changeGender">
+      <text class="item-label">性别</text>
+      <text class="item-value">{{genderArray[profile.genderIndex]}}</text>
+      <text class="arrow">></text>
+    </picker>
+    
+    <view class="profile-item" bindtap="editField" data-field="signature">
+      <text class="item-label">个性签名</text>
+      <text class="item-value signature-value">{{profile.signature || '点击设置签名'}}</text>
+      <text class="arrow">></text>
+    </view>
+  </view>
+  
+  <button class="save-btn" bindtap="saveProfile">保存修改</button>
+</view>

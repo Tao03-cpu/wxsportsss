@@ -1,0 +1,9 @@
+// 页面：目标设置（goalSettings）样式
+page { background:#f7f8fa; }
+.container { padding: 20rpx; }
+.card { background:#fff; border-radius: 16rpx; padding: 24rpx; box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.05); }
+.title { font-weight:bold; font-size: 32rpx; margin-bottom: 16rpx; }
+.form-row { display:flex; align-items:center; justify-content:space-between; margin-bottom: 12rpx; }
+.input { width: 40%; border:1rpx solid #eee; border-radius: 12rpx; padding: 12rpx; }
+.btn.primary { background:#4CAF50; color:#fff; border-radius: 12rpx; }
+.tips { color:#999; margin-top: 10rpx; }

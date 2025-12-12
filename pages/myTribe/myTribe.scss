@@ -1,0 +1,118 @@
+/* 页面：我的部落（myTribe）样式 */
+page { background: #f7f8fa; }
+.container { padding: 20rpx; padding-bottom: 150rpx; /* 为 FAB 留空间 */ }
+
+.link-btn {
+  font-size: 26rpx;
+  color: #4CAF50;
+  margin-right: 10rpx;
+}
+
+.section { margin-bottom: 30rpx; }
+.title { 
+  font-size: 32rpx; 
+  font-weight: bold; 
+  margin-bottom: 20rpx; 
+  padding-left: 10rpx; 
+  border-left: 8rpx solid #4CAF50;
+  display: flex;
+  align-items: center;
+}
+.title .tip {
+  font-size: 22rpx;
+  color: #999;
+  font-weight: normal;
+  margin-left: 10rpx;
+}
+
+.empty { 
+  color: #999; 
+  text-align: center; 
+  padding: 40rpx; 
+  background: #fff; 
+  border-radius: 12rpx; 
+}
+
+.tribe-item { 
+  display: flex; 
+  align-items: center; 
+  background: #fff; 
+  padding: 24rpx; 
+  border-radius: 16rpx; 
+  margin-bottom: 16rpx; 
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.05); 
+}
+
+.icon { 
+  margin-right: 20rpx; 
+  width: 80rpx; 
+  height: 80rpx; 
+  text-align: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60rpx; 
+}
+
+/* 图片样式 */
+.tribe-img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 12rpx;
+  background-color: #eee;
+}
+
+.info { flex: 1; overflow: hidden; }
+
+.name { 
+  font-size: 30rpx; 
+  font-weight: bold; 
+  color: #333; 
+  display: flex;
+  align-items: center;
+
+  .role-tag {
+    font-size: 20rpx;
+    background-color: #E8F5E9;
+    color: #4CAF50;
+    padding: 2rpx 10rpx;
+    border-radius: 8rpx;
+    margin-left: 10rpx;
+    font-weight: normal;
+  }
+}
+
+.desc { 
+  font-size: 24rpx; 
+  color: #999; 
+  margin-top: 6rpx; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.arrow { font-size: 24rpx; color: #999; }
+.btn-join { background: #4CAF50; color: #fff; font-size: 24rpx; padding: 0 20rpx; line-height: 50rpx; height: 50rpx; }
+
+/* 悬浮按钮 FAB */
+.fab-btn {
+  position: fixed;
+  right: 40rpx;
+  bottom: 50rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(76, 175, 80, 0.4);
+  z-index: 100;
+}
+
+.fab-btn text {
+  color: #fff;
+  font-size: 60rpx;
+  font-weight: 300;
+  margin-top: -8rpx;
+}

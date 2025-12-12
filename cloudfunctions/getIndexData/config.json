@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "db": {
+      "read": true,
+      "write": false
+    }
+  }
+}

@@ -1,0 +1,212 @@
+/*
+  页面：我的（mine）样式
+  说明：布局包含资料卡片、统计卡片、日历与功能按钮；采用柔和阴影与绿色主题。
+*/
+/* pages/mine/mine.wxss */
+page { 
+  background-color: #f7f8fa; 
+}
+.container { 
+  padding: 30rpx; 
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+/* 资料卡片 */
+.profile-card { 
+  display: flex; 
+  padding: 40rpx 30rpx; 
+  background: #fff; 
+  border-radius: 16rpx; 
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.05); 
+  align-items: center;
+}
+.card-left { 
+  margin-right: 30rpx; 
+}
+.avatar { 
+  width: 140rpx; 
+  height: 140rpx; 
+  border-radius: 50%; 
+  background: #eee;
+}
+.card-right { 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+}
+.nickname { 
+  font-size: 38rpx; 
+  font-weight: bold; 
+  color: #333;
+}
+.level-box { 
+  padding: 4rpx 12rpx; 
+  border-radius: 8rpx; 
+  background: #e0f7fa; 
+  color: #00bcd4; 
+  font-size: 24rpx; 
+  display: inline-block; 
+  margin-top: 10rpx; 
+  align-self: flex-start;
+}
+.tags-row { 
+  display: flex; 
+  margin-top: 10rpx; 
+  flex-wrap: wrap;
+}
+.tag { 
+  font-size: 20rpx; 
+  color: #666; 
+  background: #f0f0f0;
+  padding: 4rpx 10rpx;
+  border-radius: 8rpx;
+  margin-right: 10rpx;
+  margin-bottom: 5rpx;
+}
+
+/* 统计和日历面板容器 */
+.data-calendar-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+/* 通用面板样式 */
+.stats-panel, .calendar-panel {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.panel-title { 
+  font-size: 32rpx; 
+  font-weight: bold; 
+  color: #333; 
+  margin-bottom: 20rpx;
+}
+
+/* 统计网格 */
+.stats-grid { 
+  display: flex; 
+  text-align: center; 
+  gap: 10rpx; 
+}
+.card-row { display:flex; align-items:center; gap: 20rpx; }
+.left-col { flex: 1; }
+.metrics { display:flex; gap: 20rpx; }
+.metric { display:flex; align-items:center; gap: 12rpx; }
+.m-icon { font-size: 30rpx; color:#999; }
+.m-num { font-size: 40rpx; font-weight:bold; color:#1ABC9C; }
+.m-label { font-size: 24rpx; color:#999; }
+.goal-line { display:flex; align-items:center; gap: 12rpx; margin-top: 8rpx; }
+.goal-text { color:#666; }
+.goal-badge { background:#e9f8ec; color:#4caf50; border-radius: 20rpx; padding: 6rpx 12rpx; }
+.middle-col { flex: 1; }
+.status-msg { color:#4caf50; white-space: pre-line; }
+.right-col { width: 100rpx; display:flex; justify-content:center; }
+.vertical-btn { writing-mode: vertical-rl; background:#f5f5f5; color:#333; border-radius: 20rpx; padding: 20rpx 10rpx; }
+.goal-row { display:flex; justify-content:space-between; align-items:center; margin-top: 12rpx; font-size: 26rpx; }
+.goal-badge { background:#e9f8ec; color:#4caf50; border-radius: 20rpx; padding: 6rpx 12rpx; }
+.goal-msg { color:#4caf50; font-size: 28rpx; margin-top: 8rpx; }
+.stat-item { 
+  flex: 1; 
+}
+.icon { 
+  font-size: 40rpx; 
+  display: block; 
+  margin-bottom: 10rpx; 
+}
+.num { 
+  font-size: 44rpx; 
+  font-weight: bold; 
+  color: #1ABC9C; 
+  display: block; 
+}
+.unit { 
+  font-size: 28rpx; 
+  font-weight: normal; 
+  color: #1ABC9C; 
+  margin-left: 5rpx; 
+}
+.label { 
+  font-size: 24rpx; 
+  color: #999; 
+  margin-top: 5rpx;
+}
+
+/* 日历样式 */
+.calendar-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10rpx;
+}
+.month-label { 
+  font-weight: normal; 
+  color: #999; 
+  font-size: 28rpx; 
+}
+.weekdays { 
+  display: grid; 
+  grid-template-columns: repeat(7, 1fr); 
+  text-align: center; 
+  font-size: 24rpx; 
+  color: #999; 
+  margin-bottom: 10rpx; 
+  padding-top: 10rpx;
+}
+.calendar-grid { 
+  display: grid; 
+  grid-template-columns: repeat(7, 1fr); 
+  text-align: center; 
+}
+.day-item { 
+  padding: 10rpx 0; 
+  font-size: 28rpx; 
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60rpx; 
+}
+.day-item.checked .day-num {
+  background-color: #4caf50;
+  color: white;
+  width: 50rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.day-item.empty {
+  visibility: hidden;
+}
+
+/* 底部功能按钮 */
+.action-buttons-row {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+.util-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #333;
+  font-size: 30rpx;
+  border-radius: 16rpx;
+  padding: 20rpx 0;
+  line-height: 1;
+}
+.util-btn .icon {
+  font-size: 32rpx;
+  margin-right: 10rpx;
+  margin-bottom: 0;
+}

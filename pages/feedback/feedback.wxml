@@ -1,0 +1,21 @@
+<!-- 反馈 -->
+<view class="container">
+  <view class="feedback-card">
+    <text class="label">反馈类型</text>
+    <view class="type-selectors">
+      <view class="type-item {{typeIndex === 0 ? 'active' : ''}}" bindtap="selectType" data-index="0">功能建议</view>
+      <view class="type-item {{typeIndex === 1 ? 'active' : ''}}" bindtap="selectType" data-index="1">程序 Bug</view>
+      <view class="type-item {{typeIndex === 2 ? 'active' : ''}}" bindtap="selectType" data-index="2">其他问题</view>
+    </view>
+
+    <text class="label">详细描述</text>
+    <textarea class="feedback-textarea" placeholder="请详细描述您遇到的问题或提出的建议 (5字以上)" 
+              value="{{content}}" bindinput="onContentInput" maxlength="500"></textarea>
+
+    <text class="label">联系方式 (可选)</text>
+    <input class="contact-input" placeholder="请输入您的微信号/邮箱，方便我们联系您" 
+           value="{{contact}}" bindinput="onContactInput" />
+    
+    <button class="submit-btn" bindtap="submitFeedback">提交反馈</button>
+  </view>
+</view>

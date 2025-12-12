@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="header">
+    <text class="title">发现部落</text>
+    <text class="subtitle">找到志同道合的运动伙伴</text>
+  </view>
+
+  <scroll-view scroll-y class="tribe-list">
+    <!-- 临时管理功能 -->
+    <view style="padding: 20rpx;">
+      <button type="warn" bindtap="clearAllMessages">⚠️ 清空所有聊天记录</button>
+    </view>
+
+    <block wx:if="{{tribes.length > 0}}">
+      <view class="tribe-card" wx:for="{{tribes}}" wx:key="_id">
+        <view class="card-left">
+          <image class="avatar" src="{{item.logoUrl || '/assets/tips-icon.png'}}" mode="aspectFill"></image>
+        </view>
+        <view class="card-center">
+          <view class="tribe-name">{{item.name}}</view>
+          <view class="tribe-slogan">{{item.slogan || '暂无口号'}}</view>
+          <view class="tribe-info">
+            <text class="member-count">{{item.memberCount || 0}} 成员</text>
+          </view>
+        </view>
+        <view class="card-right">
+          <button class="btn-join" size="mini" bindtap="onJoinTribe" data-id="{{item._id}}" data-index="{{index}}">加入</button>
+        </view>
+      </view>
+    </block>
+    
+    <view wx:elif="{{!isLoading}}" class="empty-state">
+      <text>暂无部落，去创建一个吧！</text>
+    </view>
+    
+    <view wx:if="{{isLoading}}" class="loading-state">
+      <text>加载中...</text>
+    </view>
+  </scroll-view>
+</view>

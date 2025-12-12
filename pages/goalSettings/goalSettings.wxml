@@ -1,0 +1,17 @@
+<!-- 页面：目标设置（goalSettings）；包含每日/每周目标输入与保存按钮 -->
+<view class="container">
+  <view class="card">
+    <view class="title">目标设置</view>
+    <view class="form-row">
+      <text>每日目标(分钟)</text>
+      <input type="number" class="input" value="{{goals.dailyMin}}" bindinput="onDailyInput" />
+    </view>
+    <view class="form-row">
+      <text>每周目标(分钟)</text>
+      <input type="number" class="input" value="{{goals.weeklyMin}}" bindinput="onWeeklyInput" />
+    </view>
+    <button class="btn primary" bindtap="saveGoals">保存</button>
+  </view>
+
+  <view class="tips">设置后将在“运动”和“我的”页显示进度与激励文案</view>
+</view>

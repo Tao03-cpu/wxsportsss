@@ -1,0 +1,5 @@
+<!-- 页面：加载（loading）；展示应用启动时的加载状态与提示文案 -->
+<view class="loading-container">
+    <image class="logo" src="/assets/tabbar/community-active.png" mode="widthFix"></image> <text class="tip-text">{{tipText}}</text>
+    <view class="loading-bar"></view>
+</view>

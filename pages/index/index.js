@@ -1,14 +1,38 @@
-// index.js
 Page({
-    data: {
-      currentTab: 'recommend' // 默认选中“推荐”
-    },
-  
-    // 点击导航时触发
-    changeTab(e) {
-      // e.currentTarget.dataset.tab 获取到 data-tab 的值
+  data: {
+    bannerList: [],
+    sportList: [],
+    techniqueList: []
+  },
+
+  onLoad() {
+    this.fetchIndexData()
+  },
+
+  onPullDownRefresh() {
+    this.fetchIndexData(() => {
+      wx.stopPullDownRefresh()
+    })
+  },
+
+  fetchIndexData(callback) {
+    wx.cloud.callFunction({
+      name: 'getIndexData'
+    }).then(res => {
+      console.log("云函数返回：", res);
+      const result = res.result || {};
       this.setData({
-        currentTab: e.currentTarget.dataset.tab // 更新当前选中项
+        bannerList: result.bannerList || [],
+        sportList: result.sportList || [],
+        techniqueList: (result.techniqueList || []).map(item => ({
+          ...item,
+          iconUrl: "/assets/tips-icon.png"
+        }))
       })
-    }
-  })
+      callback && callback()
+    }).catch(err => {
+      console.error("云函数错误：", err);
+      callback && callback()
+    })
+  }
+})

@@ -1,90 +1,191 @@
+page {
+  background: #f6fdf7;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f8f8f8;
-    height: 100vh;
-    position: relative;
-  }
-  
-  .sport-tabs {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    background: #fff;
-    padding: 20rpx 0;
-    border-bottom: 1px solid #eee;
-  
-    .tab {
-      font-size: 30rpx;
-      color: #666;
-      padding: 10rpx 20rpx;
-      border-radius: 30rpx;
-  
-      &.active {
-        background-color: #333;
-        color: #fff;
-        font-weight: bold;
-      }
-    }
-  }
-  
-  .map {
-    width: 100%;
-    height: 70vh;
-  }
-  
-  .info-panel {
-    position: absolute;
-    bottom: 260rpx;
-    width: 90%;
-    display: flex;
-    justify-content: space-between;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 20rpx;
-    padding: 20rpx;
-    box-shadow: 0 5rpx 15rpx rgba(0, 0, 0, 0.1);
-  
-    .info-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      .label {
-        font-size: 26rpx;
-        color: #666;
-      }
-      .value {
-        font-size: 36rpx;
-        font-weight: bold;
-        color: #00b26a;
-      }
-    }
-  }
-  
-  .go-section {
-    position: absolute;
-    bottom: 80rpx;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  
-    .go-btn, .stop-btn {
-      width: 180rpx;
-      height: 180rpx;
-      border-radius: 50%;
-      font-size: 50rpx;
-      font-weight: bold;
-      color: #fff;
-      box-shadow: 0 10rpx 30rpx rgba(0, 178, 106, 0.4);
-    }
-  
-    .go-btn {
-      background-color: #00b26a;
-    }
-  
-    .stop-btn {
-      background-color: #ff4d4f;
-    }
-  }
-  
+  padding: 24rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+/* 模式选择 */
+.mode-group {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mode-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  border-radius: 20rpx;
+  background-color: #e9f8ec;
+  color: #4caf50;
+  font-weight: 500;
+  transition: all 0.3s;
+  margin: 0 10rpx;
+}
+
+.mode-item.active {
+  background-color: #4caf50;
+  color: white;
+  box-shadow: 0 2rpx 8rpx rgba(76, 175, 80, 0.4);
+}
+
+/* 自定义输入框 */
+.custom-input-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+  margin: 20rpx 0;
+}
+
+.custom-input {
+  width: 80%;
+height: 80rpx;       // 高度加大
+font-size: 32rpx;    // 字体加大
+padding: 0 20rpx;
+border: 1rpx solid #4caf50;
+border-radius: 20rpx;
+background-color: #f6fdf7;
+}
+
+.btn.confirm {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  padding: 14rpx 0;
+  text-align: center;
+}
+
+/* 地图样式 */
+.map-wrap {
+  width: 100%;
+  height: 320px;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+/* 统计区 */
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 按钮控制区 */
+.controls {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.btn {
+  flex: 1;
+  margin: 0 10rpx;
+  border-radius: 50rpx;
+  color: white;
+  font-size: 30rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  padding: 16rpx 0;
+  transition: all 0.2s;
+}
+
+/* 各状态颜色 */
+.start { background-color: #4caf50; } .start:hover { background-color: #43a047; }
+.pause { background-color: #ff9800; } .pause:hover { background-color: #fb8c00; }
+.resume { background-color: #00bfa5; } .resume:hover { background-color: #00a795; }
+.stop { background-color: #f44336; } .stop:hover { background-color: #e53935; }
+
+/* 打卡记录区 */
+.history {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 目标管理 */
+.goals { background:#fff; border-radius: 16rpx; padding: 20rpx; box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.05); }
+.goal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom: 10rpx; }
+.goal-row { display:flex; justify-content:space-between; align-items:center; font-size: 28rpx; color:#333; }
+.goal-msg { margin-top: 8rpx; color:#4caf50; font-size: 28rpx; }
+.badge { background:#e9f8ec; color:#4caf50; border-radius: 20rpx; padding: 6rpx 12rpx; font-size: 24rpx; }
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.title { font-size: 32rpx; font-weight: 600; color: #333; }
+.no-records { text-align: center; color: #888; font-size: 28rpx; }
+
+.record-item {
+  border-top: 1rpx solid #eaeaea;
+  padding-top: 10rpx;
+  margin-top: 10rpx;
+}
+
+.record-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+}
+
+.record-mode { color: #4caf50; font-weight: 500; }
+.record-detail { color: #555; }
+
+/* 提示 toast */
+.toast {
+  position: fixed;
+  bottom: 100rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 16rpx 28rpx;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  z-index: 99;
+}

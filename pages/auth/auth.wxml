@@ -1,0 +1,20 @@
+<!-- 身份认证 -->
+<view class="auth-container">
+    <view class="logo-area">
+        <text class="logo-text">燃动部落</text>
+        <view class="slogan">激发你的运动潜能</view>
+    </view>
+    
+    <view class="tip-box">
+        <text class="tip-title">欢迎加入</text>
+        <text class="tip-content">请授权获取您的微信昵称和头像，以完善您的个人档案和部落身份标签。</text>
+    </view>
+    
+    <button class="auth-btn" 
+            open-type="getUserInfo" 
+            bindgetuserinfo="handleGetUserInfo">
+        一键授权并进入部落
+    </button>
+    
+    <view class="footer-tip">您的身份信息已安全加密</view>
+</view>

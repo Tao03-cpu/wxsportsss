@@ -1,0 +1,45 @@
+page { background-color: #f8f8f8; } /* 浅色背景 */
+
+.loading-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+.logo {
+  width: 200rpx;
+  margin-bottom: 60rpx;
+}
+
+.tip-text {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+}
+
+/* 简单的加载动画 */
+.loading-bar {
+  width: 150rpx;
+  height: 6rpx;
+  background-color: #E0E0E0;
+  border-radius: 3rpx;
+  overflow: hidden;
+}
+
+.loading-bar::after {
+  content: '';
+  display: block;
+  width: 30%;
+  height: 100%;
+  background-color: #1ABC9C; /* 使用主题色 */
+  animation: loading-move 1.5s infinite ease-in-out;
+}
+
+@keyframes loading-move {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(300%); }
+  100% { transform: translateX(-100%); }
+}

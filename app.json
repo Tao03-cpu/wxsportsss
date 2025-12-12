@@ -1,22 +1,31 @@
 {
-  "entryPagePath": "pages/index/index",
+  
   "pages": [
+    "pages/loading/loading",
     "pages/index/index",
-    "pages/community/community",
     "pages/sports/sports",
     "pages/mine/mine",
-    "pages/list/list"
+    "pages/editProfile/editProfile",
+    "pages/feedback/feedback",
+    "pages/settings/settings",
+    "pages/admin/admin",
+    "pages/auth/auth",
+    "pages/myTribe/myTribe",
+    "pages/tribeManage/tribeManage",
+    "pages/tribeChat/tribeChat",
+    "pages/goalSettings/goalSettings",
+    "pages/healthDashboard/healthDashboard"
   ],
   "window": {
     "navigationBarTitleText": "燃动部落",
-    "navigationBarBackgroundColor": "#f3514f",
+    "navigationBarBackgroundColor": "#4CAF50",
     "enablePullDownRefresh": true,
     "backgroundColor": "#efefef"
   },
   "tabBar": {
     "selectedColor": "#f3514f",
     "color": "#666",
-    "list":[
+    "list": [
       {
         "text": "首页",
         "pagePath": "pages/index/index",
@@ -24,8 +33,8 @@
         "selectedIconPath": "/assets/tabbar/index-active.png"
       },
       {
-        "text": "社区",
-        "pagePath": "pages/community/community",
+        "text": "部落",
+        "pagePath": "pages/myTribe/myTribe",
         "iconPath": "/assets/tabbar/community.png",
         "selectedIconPath": "/assets/tabbar/community-active.png"
       },
@@ -41,9 +50,19 @@
         "iconPath": "/assets/tabbar/mine.png",
         "selectedIconPath": "/assets/tabbar/mine-active.png"
       }
-
     ]
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于记录运动轨迹和打卡定位和天气获取"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "startLocationUpdate",
+    "onLocationChange"
+  ],
+  "cloud": true,
   "style": "v2",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"

@@ -1,0 +1,70 @@
+/* 页面：部落聊天（tribeChat）；实时消息与 AI 互动 */
+page { 
+  background-color: #f2f2f2; 
+  height: 100vh; 
+  display: flex; 
+  flex-direction: column; 
+  overflow: hidden; /* 防止页面整体滚动 */
+}
+
+.chat-container { 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  position: relative;
+  height: 100%;
+}
+
+.message-list { 
+  flex: 1; 
+  padding: 20rpx; 
+  box-sizing: border-box; 
+  overflow-y: scroll;
+  /* 关键：给底部留出足够的空间，防止被输入框遮挡 */
+  /* 这里留出的是输入框的基本高度 + 安全区域 */
+  padding-bottom: calc(120rpx + env(safe-area-inset-bottom)); 
+}
+
+.message-item { display: flex; margin-bottom: 30rpx; }
+.message-item.self { flex-direction: row-reverse; }
+
+.avatar { width: 80rpx; height: 80rpx; border-radius: 10rpx; background: #ddd; flex-shrink: 0; }
+
+.content { 
+  max-width: 480rpx; /* 限制最大宽度，防止撑破屏幕 */
+  padding: 20rpx; 
+  border-radius: 10rpx; 
+  font-size: 30rpx; 
+  line-height: 1.5; 
+  position: relative; 
+  margin: 0 20rpx; 
+  word-break: break-all; 
+}
+
+.message-item.other .content { background: #fff; color: #333; }
+.message-item.self .content { background: #95ec69; color: #000; }
+
+.nickname { font-size: 24rpx; color: #999; margin-bottom: 6rpx; max-width: 400rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.message-item.self .nickname { text-align: right; }
+
+/* 底部输入区 - 改为绝对定位 */
+.input-area { 
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0; /* 默认贴底 */
+  background: #f7f7f7; 
+  padding: 20rpx; 
+  border-top: 1rpx solid #e5e5e5; 
+  display: flex; 
+  align-items: center; 
+  min-height: 100rpx; 
+  box-sizing: border-box; 
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  z-index: 999;
+  transition: bottom 0.1s ease-out; /* 键盘弹起时的平滑过渡 */
+}
+
+.input { flex: 1; background: #fff; height: 72rpx; border-radius: 10rpx; padding: 0 20rpx; font-size: 30rpx; margin-right: 20rpx; }
+.send-btn { width: 120rpx; height: 72rpx; line-height: 72rpx; text-align: center; background: #07c160; color: #fff; font-size: 28rpx; border-radius: 10rpx; padding: 0; margin: 0; }
+.send-btn.disabled { background: #e0e0e0; color: #aaa; }

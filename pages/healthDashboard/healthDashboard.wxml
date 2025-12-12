@@ -1,0 +1,39 @@
+<!-- 页面：健康档案（healthDashboard）；身高体重档案、BMI、体重趋势柱状图与明细列表 -->
+<view class="container">
+  <view class="card">
+    <view class="title">身高体重</view>
+    <view class="form-row">
+      <text>身高(cm)</text>
+      <input type="number" class="input" value="{{heightCm}}" bindinput="onHeightInput" />
+    </view>
+    <view class="form-row">
+      <text>当前体重(kg)</text>
+      <input type="number" class="input" value="{{latestWeight}}" bindinput="onWeightInput" />
+    </view>
+    <button class="btn primary" bindtap="saveProfile">保存档案</button>
+  </view>
+
+  <view class="card">
+    <view class="title">记录今日体重</view>
+    <view class="form-row">
+      <input type="number" class="input" placeholder="输入今日体重(kg)" value="{{recordWeight}}" bindinput="onRecordInput" />
+      <button class="btn" bindtap="addWeightRecord">记录</button>
+    </view>
+    <view class="bmi-box">
+      <text>当前 BMI：{{bmi}}（{{bmiText}}）</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="title">体重趋势</view>
+    <canvas canvas-id="trendCanvas" class="trend-canvas"></canvas>
+    <view class="list">
+      <block wx:for="{{records}}" wx:key="_id">
+        <view class="item">
+          <text>{{item.dateStr}}</text>
+          <text>{{item.weight}} kg</text>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

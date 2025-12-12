@@ -1,0 +1,104 @@
+page {
+  background-color: #f7f7f7;
+}
+
+.container {
+  padding: 20rpx;
+}
+
+.header {
+  padding: 30rpx 20rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+
+  .title {
+    font-size: 36rpx;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 10rpx;
+  }
+
+  .subtitle {
+    font-size: 26rpx;
+    color: #888;
+  }
+}
+
+.tribe-list {
+  height: calc(100vh - 200rpx);
+}
+
+.tribe-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.03);
+
+  .card-left {
+    margin-right: 20rpx;
+    .avatar {
+      width: 100rpx;
+      height: 100rpx;
+      border-radius: 50%;
+      background-color: #eee;
+    }
+  }
+
+  .card-center {
+    flex: 1;
+    overflow: hidden;
+
+    .tribe-name {
+      font-size: 32rpx;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8rpx;
+    }
+
+    .tribe-slogan {
+      font-size: 24rpx;
+      color: #666;
+      margin-bottom: 8rpx;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tribe-info {
+      font-size: 22rpx;
+      color: #999;
+    }
+  }
+
+  .card-right {
+    margin-left: 20rpx;
+
+    .btn-join {
+      background-color: #4CAF50;
+      color: #fff;
+      font-size: 24rpx;
+      padding: 0 30rpx;
+      height: 56rpx;
+      line-height: 56rpx;
+      border-radius: 28rpx;
+      font-weight: 500;
+      
+      &::after {
+        border: none;
+      }
+    }
+  }
+}
+
+.empty-state, .loading-state {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}

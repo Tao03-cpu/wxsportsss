@@ -1,42 +1,114 @@
+<!-- 运动 -->
 <view class="container">
-  <!-- 顶部运动类型切换 -->
-  <view class="sport-tabs">
-    <view wx:for="{{sports}}" wx:key="index" class="tab {{currentSport === item ? 'active' : ''}}" bindtap="changeSport" data-sport="{{item}}">
-      <text>{{item}}</text>
+  <!-- 模式选择 -->
+  <view class="mode-group">
+    <view wx:for="{{modes}}" wx:key="type"
+          class="mode-item {{currentMode === item.type ? 'active' : ''}}"
+          bindtap="onModeSelect" data-type="{{item.type}}">
+      <icon type="{{item.icon}}" size="22" class="mode-icon" />
+      <text class="mode-text">{{item.label}}</text>
     </view>
   </view>
 
-  <!-- 地图显示 -->
-  <map
-    id="map"
-    class="map"
-    longitude="{{longitude}}"
-    latitude="{{latitude}}"
-    scale="16"
-    polyline="{{polyline}}"
-    enable-3D="true"
-    show-location
-  ></map>
+  <!-- 自定义模式输入框 -->
+  <view wx:if="{{showCustomInput}}" class="custom-input-wrap">
+    <input class="custom-input" placeholder="请输入自定义运动类型"
+           value="{{customInput}}" bindinput="onCustomInput" />
+    <button class="btn confirm" bindtap="confirmCustomMode">
+      <text>确认</text>
+    </button>
+  </view>
 
-  <!-- 实时数据栏 -->
-  <view class="info-panel">
-    <view class="info-item">
-      <text class="label">时长</text>
-      <text class="value">{{timeDisplay}}</text>
+  <!-- 地图（仅跑步/骑行或自定义选择显示） -->
+  <view class="map-wrap" wx:if="{{showMap}}">
+    <map id="map" class="map"
+         longitude="{{longitude}}"
+         latitude="{{latitude}}"
+         scale="{{mapScale}}"
+         polyline="{{polyline}}"
+         show-location="true"
+         show-compass="true"
+         enable-3D
+         enable-overlooking
+         enable-zoom
+         enable-scroll
+         enable-rotate>
+    </map>
+  </view>
+
+  <!-- 计时器与统计 -->
+  <view class="stats">
+    <view class="stat-row">
+      <view class="stat-item">
+        <text class="stat-value">{{durationStr}}</text>
+        <text class="stat-label">时长</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{distanceStr}}</text>
+        <text class="stat-label">距离</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{paceStr}}</text>
+        <text class="stat-label">配速</text>
+      </view>
     </view>
-    <view class="info-item">
-      <text class="label">距离</text>
-      <text class="value">{{distance}} km</text>
-    </view>
-    <view class="info-item">
-      <text class="label">配速</text>
-      <text class="value">{{pace}}</text>
+
+    <!-- 操作按钮 -->
+    <view class="controls">
+      <button class="btn start" bindtap="onStart" wx:if="{{status === 'idle'}}">
+        <icon type="add" size="18" /> <text>开始</text>
+      </button>
+
+      <button class="btn pause" bindtap="onPause" wx:if="{{status === 'running'}}">
+        <icon type="pause" size="18" /> <text>暂停</text>
+      </button>
+
+      <button class="btn resume" bindtap="onResume" wx:if="{{status === 'paused'}}">
+        <icon type="play" size="18" /> <text>继续</text>
+      </button>
+
+      <button class="btn stop" bindtap="onStop" wx:if="{{status !== 'idle'}}">
+        <icon type="cancel" size="18" /> <text>结束</text>
+      </button>
     </view>
   </view>
 
-  <!-- 控制按钮 -->
-  <view class="go-section">
-    <button wx:if="{{!isRunning}}" class="go-btn" bindtap="startRun">GO</button>
-    <button wx:elif="{{isRunning}}" class="stop-btn" bindtap="endRun">结束</button>
+  <!-- 目标管理与激励 -->
+  <view class="goals">
+    <view class="goal-header">
+      <text class="title">今日目标</text>
+      <button size="mini" bindtap="setGoals">设置目标</button>
+    </view>
+    <view class="goal-row">
+      <text>目标：{{goals.dailyMin}} min</text>
+      <text wx:if="{{todayCheckinDone}}" class="badge">已打卡</text>
+    </view>
+    <view class="goal-msg">{{goalMsg}}</view>
   </view>
+
+  <!-- 今日打卡记录 -->
+  <view class="history">
+    <view class="history-header">
+      <text class="title">今日打卡</text>
+    </view>
+
+    <view wx:if="{{todayRecords.length === 0}}" class="no-records">
+      <icon type="home" size="20" /> <text>今天还没有打卡，快去运动吧！</text>
+    </view>
+
+    <view wx:for="{{todayRecords}}" wx:key="id" class="record-item">
+      <view class="record-row">
+        <text class="record-mode">{{item.modeLabel}}</text>
+        <text class="record-time">{{item.time}}</text>
+      </view>
+      <view class="record-row">
+        <text class="record-detail">时长：{{item.durationStr}}</text>
+        <text class="record-detail">距离：{{item.distanceStr}}</text>
+        <text class="record-detail">配速：{{item.paceStr}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 可能的提示信息 -->
+  <view class="toast" wx:if="{{toast}}">{{toast}}</view>
 </view>

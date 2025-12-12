@@ -1,2 +1,79 @@
-<!--pages/mine/mine.wxml-->
-<text>pages/mine/mine.wxml</text>
+<!--
+  页面：我的（mine）
+  结构：
+    - 个人资料卡片（头像/昵称/等级/标签）
+    - 本周燃动数据（时长/累计打卡）
+    - 本月打卡日历（当月高亮）
+    - 底部快捷入口（设置/反馈/健康档案）
+-->
+<view class="container">
+    	<view class="profile-card">
+    <view class="card-left">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" bindtap="previewAvatar"></image>
+    </view>
+		<view class="card-right">
+			<view class="nickname">{{userInfo.nickname}}</view>
+			<view class="level-box">{{userInfo.level}}</view>
+			<view class="tags-row">
+				<block wx:for="{{userInfo.tribe_tags}}" wx:key="index">
+					<text class="tag">{{item}}</text>
+				</block>
+            </view>
+        </view>
+        </view>
+
+    <view class="data-calendar-panel">
+		
+        <view class="stats-panel">
+            <view class="panel-title">本周燃动数据</view>
+            <view class="stats-grid">
+                <view class="stat-item">
+                    <text class="icon">⏱️</text>
+                    <text class="num">{{userInfo.stats.week_duration}}<text class="unit">min</text></text>
+                    <text class="label">本周时长</text>
+                </view>
+                <view class="stat-item">
+                    <text class="icon">🔥</text>
+                    <text class="num">{{userInfo.stats.total_checkins}}</text>
+                    <text class="label">累计打卡</text>
+                </view>
+            </view>
+        </view>
+
+		<view class="calendar-panel">
+			<view class="panel-title calendar-header">
+				<text>本月打卡日历</text>
+				<text class="month-label">{{calendarTitle}}</text>
+			</view>
+			
+			<view class="weekdays">
+				<text>日</text><text>一</text><text>二</text><text>三</text><text>四</text><text>五</text><text>六</text>
+			</view>
+
+			<view class="calendar-grid">
+				<block wx:for="{{calendarDays}}" wx:key="day">
+					<view wx:if="{{item.is_empty}}" class="day-item empty"></view>
+					
+					<view wx:else 
+                        class="day-item {{item.is_checked ? 'checked' : ''}}">
+						<view class="day-num">{{item.day}}</view>
+					</view>
+				</block>
+			</view>
+		</view>
+		
+	</view>
+
+	<view class="action-buttons-row">
+		<button class="util-btn" bindtap="goToSettings">
+			<text class="icon">⚙️</text><text>设置</text>
+		</button>
+		<button class="util-btn" bindtap="goToFeedback">
+			<text class="icon">💬</text><text>意见反馈</text>
+		</button>
+		<button class="util-btn" bindtap="goHealthDashboard">
+			<text class="icon">⚖️</text><text>健康档案</text>
+		</button>
+	</view>
+	
+</view>

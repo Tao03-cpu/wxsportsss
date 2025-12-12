@@ -1,0 +1,24 @@
+<!-- 管理员 -->
+<view class="admin-container">
+  <view class="admin-header">
+    <view class="title">🔥 管理员后台</view>
+    <view class="subtitle">管理员: {{userInfo.nickname}}</view>
+  </view>
+
+  <view class="dashboard">
+    <view class="card">
+      <view class="num">10</view> <view class="txt">部落总人数</view>
+    </view>
+    <view class="card">
+      <view class="num">0</view>
+      <view class="txt">今日待审核</view>
+    </view>
+  </view>
+
+  <view class="list-title">功能入口</view>
+  <view class="menu-list">
+    <view class="menu-item">发布活动任务</view>
+    <view class="menu-item">成员数据分析</view>
+    <view class="menu-item" bindtap="logout">退出管理员模式</view>
+  </view>
+</view>

@@ -1,0 +1,59 @@
+<!-- 页面：我的部落（myTribe） -->
+<view class="container">
+  
+  <!-- 1. 头部按钮 -->
+  <view class="header-actions" style="display: flex; justify-content: flex-end; padding-bottom: 10rpx;">
+    <view class="link-btn" bindtap="goToManage">🔍 发现更多部落</view>
+  </view>
+
+  <!-- 2. 已加入的部落 -->
+  <view class="section">
+    <view class="title">我的部落 <text class="tip">(长按可退出)</text></view>
+    
+    <block wx:if="{{myTribes.length > 0}}">
+      <view class="tribe-item" wx:for="{{myTribes}}" wx:key="_id" 
+            bindtap="enterChat" bindlongpress="onLongPressTribe"
+            data-id="{{item._id}}" data-name="{{item.name}}" data-role="{{item.myRole}}">
+        <view class="icon">
+          <image wx:if="{{item.logoUrl}}" src="{{item.logoUrl}}" mode="aspectFill" class="tribe-img"></image>
+          <text wx:else>{{item.icon}}</text>
+        </view>
+        <view class="info">
+          <view class="name">
+            {{item.name}}
+            <text class="role-tag" wx:if="{{item.myRole}}">{{item.myRole}}</text>
+          </view>
+          <view class="desc">{{item.slogan || '暂无口号'}}</view>
+        </view>
+        <view class="arrow">进入 ></view>
+      </view>
+    </block>
+
+    <view wx:elif="{{!isLoading}}" class="empty">
+      暂未加入任何部落
+    </view>
+  </view>
+
+  <!-- 3. 推荐部落 -->
+  <view class="section">
+    <view class="title">推荐部落</view>
+    <block wx:for="{{recommends}}" wx:key="id">
+      <view class="tribe-item">
+        <view class="icon">
+          <text>{{item.icon}}</text>
+        </view>
+        <view class="info">
+          <view class="name">{{item.name}}</view>
+          <view class="desc">{{item.desc}}</view>
+        </view>
+        <button size="mini" class="btn-join" bindtap="joinRecommends" data-item="{{item}}">加入</button>
+      </view>
+    </block>
+  </view>
+
+  <!-- 悬浮创建按钮 -->
+  <view class="fab-btn" bindtap="showCreateModal">
+    <text>+</text>
+  </view>
+
+</view>
