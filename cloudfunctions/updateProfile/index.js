@@ -1,7 +1,7 @@
 // cloudfunctions/updateProfile/index.js
 //更新资料
 const cloud = require('wx-server-sdk')
-cloud.init({ env: 'cloud1-3g5evs3cb978a9b3' })
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
 const db = cloud.database()
 
 exports.main = async (event, context) => {
@@ -14,18 +14,23 @@ exports.main = async (event, context) => {
   
   try {
     if (action === 'fetch') {
-      const res = await profileCollection.where({_openid: openid}).get()
+      const res = await profileCollection.where({_openid: openid}).limit(1).get()
       
       const defaultProfile = {
-        // 修改：默认为空，由前端决定显示什么默认图，避免云存储链接失效导致破图
         avatarUrl: '', 
         nickname: '运动达人',
         genderIndex: 0,
-        signature: '我的运动，我做主！'
+        signature: '我的运动，我做主！',
+        role: 'user'
       }
       
       if (res.data.length > 0) {
-          return { code: 200, profile: res.data[0] }
+          const p = res.data[0]
+          if (!p.role) {
+            try { await profileCollection.where({ _openid: openid }).update({ data: { role: 'user', updateTime: new Date() } }) } catch(_) {}
+            p.role = 'user'
+          }
+          return { code: 200, profile: p }
       } else {
           return { code: 200, profile: {...defaultProfile, _openid: openid} }
       }

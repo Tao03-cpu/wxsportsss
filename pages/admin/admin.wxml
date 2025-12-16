@@ -1,24 +1,266 @@
-<!-- 管理员 -->
 <view class="admin-container">
+  <!-- 顶部导航栏 -->
   <view class="admin-header">
-    <view class="title">🔥 管理员后台</view>
-    <view class="subtitle">管理员: {{userInfo.nickname}}</view>
-  </view>
-
-  <view class="dashboard">
-    <view class="card">
-      <view class="num">10</view> <view class="txt">部落总人数</view>
-    </view>
-    <view class="card">
-      <view class="num">0</view>
-      <view class="txt">今日待审核</view>
+    <view class="header-content">
+      <view class="header-left">
+        <view class="header-icon">⚙️</view>
+        <view class="header-text">
+          <view class="header-title">管理后台</view>
+          <view class="header-subtitle">{{userInfo.nickname || '管理员'}}</view>
+        </view>
+      </view>
     </view>
   </view>
 
-  <view class="list-title">功能入口</view>
-  <view class="menu-list">
-    <view class="menu-item">发布活动任务</view>
-    <view class="menu-item">成员数据分析</view>
-    <view class="menu-item" bindtap="logout">退出管理员模式</view>
+  <!-- 标签页导航 -->
+  <view class="tabs-container">
+    <view class="tabs-wrapper">
+      <view class="tab-item {{activeTab==='dashboard'?'active':''}}" data-tab="dashboard" bindtap="switchTab">
+        <text class="tab-icon">📊</text>
+        <text class="tab-text">仪表盘</text>
+      </view>
+      <view class="tab-item {{activeTab==='users'?'active':''}}" data-tab="users" bindtap="switchTab">
+        <text class="tab-icon">👥</text>
+        <text class="tab-text">用户</text>
+      </view>
+      <view class="tab-item {{activeTab==='tribes'?'active':''}}" data-tab="tribes" bindtap="switchTab">
+        <text class="tab-icon">🏘️</text>
+        <text class="tab-text">部落</text>
+      </view>
+      <view class="tab-item {{activeTab==='feedback'?'active':''}}" data-tab="feedback" bindtap="switchTab">
+        <text class="tab-icon">💬</text>
+        <text class="tab-text">反馈</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 仪表盘 -->
+  <view wx:if="{{activeTab==='dashboard'}}" class="dashboard-content">
+    <!-- 数据卡片 -->
+    <view class="metrics-grid">
+      <view class="metric-card card-1">
+        <view class="metric-icon">👤</view>
+        <view class="metric-content">
+          <view class="metric-value">{{metrics.totalUsers}}</view>
+          <view class="metric-label">总用户数</view>
+        </view>
+      </view>
+      <view class="metric-card card-2">
+        <view class="metric-icon">🔥</view>
+        <view class="metric-content">
+          <view class="metric-value">{{metrics.dauToday}}</view>
+          <view class="metric-label">今日活跃</view>
+        </view>
+      </view>
+      <view class="metric-card card-3">
+        <view class="metric-icon">💬</view>
+        <view class="metric-content">
+          <view class="metric-value">{{metrics.messagesToday}}</view>
+          <view class="metric-label">今日消息</view>
+        </view>
+      </view>
+      <view class="metric-card card-4">
+        <view class="metric-icon">✅</view>
+        <view class="metric-content">
+          <view class="metric-value">{{metrics.checkinRateToday}}%</view>
+          <view class="metric-label">打卡完成率</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 统计信息区域 -->
+    <view class="stats-section">
+      <!-- 部落统计 -->
+      <view class="stat-card">
+        <view class="stat-header">
+          <view class="stat-title">🏘️ 部落统计</view>
+          <view class="stat-subtitle">Tribe Statistics</view>
+        </view>
+        <view class="stat-content">
+          <view class="stat-item">
+            <view class="stat-label">部落总数</view>
+            <view class="stat-value">{{tribeStats.totalTribes || 0}}</view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-label">总成员数</view>
+            <view class="stat-value">{{tribeStats.totalMembers || 0}}</view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-label">平均成员数</view>
+            <view class="stat-value">{{tribeStats.avgMembers || 0}}</view>
+          </view>
+        </view>
+        <view class="stat-list">
+          <view class="stat-list-title">热门部落</view>
+          <block wx:for="{{tribeStats.topTribes}}" wx:key="id" wx:for-item="tribe">
+            <view class="stat-list-item">
+              <view class="list-item-name">{{tribe.name}}</view>
+              <view class="list-item-value">{{tribe.memberCount}}人</view>
+            </view>
+          </block>
+          <view wx:if="{{!tribeStats.topTribes || tribeStats.topTribes.length === 0}}" class="stat-empty">暂无数据</view>
+        </view>
+      </view>
+
+      <!-- 运动类型统计 -->
+      <view class="stat-card">
+        <view class="stat-header">
+          <view class="stat-title">🏃 运动类型分布</view>
+          <view class="stat-subtitle">Sport Type Distribution</view>
+        </view>
+        <view class="stat-content">
+          <view class="stat-item">
+            <view class="stat-label">总运动次数</view>
+            <view class="stat-value">{{sportStats.totalSessions || 0}}</view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-label">总运动时长</view>
+            <view class="stat-value">{{sportStats.totalDuration || 0}}分钟</view>
+          </view>
+        </view>
+        <view class="stat-list">
+          <view class="stat-list-title">运动类型排行</view>
+          <block wx:for="{{sportStats.typeList}}" wx:key="type" wx:for-item="sport">
+            <view class="stat-list-item">
+              <view class="list-item-name">
+                <text class="sport-icon">{{sport.icon}}</text>
+                {{sport.label}}
+              </view>
+              <view class="list-item-value">
+                <view class="progress-bar">
+                  <view class="progress-fill" style="width: {{sport.percent}}"></view>
+                </view>
+                <text class="progress-text">{{sport.count}}次 ({{sport.percent}}%)</text>
+              </view>
+            </view>
+          </block>
+          <view wx:if="{{!sportStats.typeList || sportStats.typeList.length === 0}}" class="stat-empty">暂无数据</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户管理 -->
+  <view wx:elif="{{activeTab==='users'}}" class="data-content">
+    <view class="page-header">
+      <view class="page-title">用户管理</view>
+      <view class="page-desc">管理用户信息与权限</view>
+    </view>
+    <view class="users-list">
+      <block wx:for="{{users}}" wx:key="_id">
+        <view class="user-card">
+          <image class="user-avatar" src="{{item.avatarUrl || '/assets/tips-icon.png'}}" mode="aspectFill"></image>
+          <view class="user-info">
+            <view class="user-name-label">昵称</view>
+            <input class="user-name-input" value="{{item.nickname}}" data-id="{{item._id}}" bindinput="onUserNickInput" placeholder="请输入昵称" />
+          </view>
+          <view class="user-actions">
+            <button class="action-btn save-btn" size="mini" data-id="{{item._id}}" bindtap="saveUserNick">保存</button>
+            <button class="action-btn delete-btn" size="mini" type="warn" data-id="{{item._id}}" bindtap="deleteUser">删除</button>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="load-more-wrapper">
+      <button class="load-more-btn" bindtap="loadMoreUsers">加载更多</button>
+    </view>
+  </view>
+
+  <!-- 部落管理 -->
+  <view wx:elif="{{activeTab==='tribes'}}" class="data-content">
+    <view class="page-header">
+      <view class="page-title">部落管理</view>
+      <view class="page-desc">创建和管理运动部落</view>
+    </view>
+    
+    <!-- 创建部落表单 -->
+    <view class="create-tribe-card">
+      <view class="form-title">创建新部落</view>
+      <view class="form-row">
+        <input class="form-input" placeholder="部落名称" value="{{createTribeName}}" bindinput="onCreateTribeName" />
+      </view>
+      <view class="form-row">
+        <input class="form-input" placeholder="部落口号（可选）" value="{{createTribeSlogan}}" bindinput="onCreateTribeSlogan" />
+      </view>
+      <button class="create-btn" bindtap="createTribe">创建部落</button>
+    </view>
+
+    <!-- 部落列表 -->
+    <view class="tribes-list">
+      <block wx:for="{{tribes}}" wx:key="_id">
+        <view class="tribe-card">
+          <view class="tribe-main">
+            <view class="tribe-header">
+              <view class="tribe-name">{{item.name}}</view>
+              <view class="tribe-badge">部落</view>
+            </view>
+            <view class="tribe-slogan">{{item.slogan || '暂无口号'}}</view>
+          </view>
+          <view class="tribe-actions">
+            <button class="action-btn edit-btn" size="mini" data-id="{{item._id}}" bindtap="editTribe">编辑</button>
+            <button class="action-btn delete-btn" size="mini" type="warn" data-id="{{item._id}}" bindtap="deleteTribe">删除</button>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 编辑面板 -->
+    <view wx:if="{{editTribeId}}" class="edit-panel">
+      <view class="edit-panel-title">编辑部落</view>
+      <view class="form-row">
+        <input class="form-input" placeholder="名称" value="{{editTribeName}}" bindinput="onEditTribeName" />
+      </view>
+      <view class="form-row">
+        <input class="form-input" placeholder="口号" value="{{editTribeSlogan}}" bindinput="onEditTribeSlogan" />
+      </view>
+      <view class="edit-actions">
+        <button class="action-btn save-btn" size="mini" bindtap="saveTribeEdit">保存</button>
+        <button class="action-btn cancel-btn" size="mini" bindtap="cancelTribeEdit">取消</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 反馈管理 -->
+  <view wx:elif="{{activeTab==='feedback'}}" class="data-content">
+    <view class="page-header">
+      <view class="page-title">用户反馈</view>
+      <view class="page-desc">查看和处理用户反馈</view>
+    </view>
+    <view class="feedbacks-list">
+      <block wx:for="{{feedbacks}}" wx:key="_id">
+        <view class="feedback-card {{item.status==='resolved'?'resolved':''}}">
+          <view class="feedback-header">
+            <view class="feedback-type-badge">{{item.type}}</view>
+            <view class="feedback-status {{item.status==='resolved'?'status-resolved':'status-pending'}}">
+              {{item.status==='resolved'?'已处理':'待处理'}}
+            </view>
+          </view>
+          <view class="feedback-content">{{item.content}}</view>
+          <view class="feedback-footer">
+            <view class="feedback-meta">
+              <text class="meta-item">📞 {{item.contact || '无联系方式'}}</text>
+              <text class="meta-item">🕐 {{item.submitTimeStr}}</text>
+            </view>
+          </view>
+          <view class="feedback-actions">
+            <button class="action-btn status-btn" size="mini" data-id="{{item._id}}" data-status="{{item.status==='pending'?'resolved':'pending'}}" bindtap="toggleFeedbackStatus">
+              {{item.status==='pending'?'✓ 标记已处理':'↩ 标记待处理'}}
+            </button>
+            <button class="action-btn delete-btn" size="mini" type="warn" data-id="{{item._id}}" bindtap="deleteFeedback">删除</button>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="load-more-wrapper">
+      <button class="load-more-btn" bindtap="loadMoreFeedback">加载更多</button>
+    </view>
+  </view>
+
+  <!-- 底部退出按钮 -->
+  <view class="logout-section">
+    <view class="logout-btn-bottom" bindtap="logout">
+      <text class="logout-icon">🚪</text>
+      <text class="logout-text">退出管理员模式</text>
+    </view>
   </view>
 </view>

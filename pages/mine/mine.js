@@ -280,4 +280,21 @@ Page({
   }
   ,
   goHealthDashboard() { wx.navigateTo({ url: '/pages/healthDashboard/healthDashboard' }); }
+  ,
+  // goToAdmin() { wx.navigateTo({ url: '/pages/admin/admin' }); }
+  // ,
+  // becomeAdmin() {
+  //   wx.showLoading({ title: '切换中...' });
+  //   wx.cloud.callFunction({
+  //     name: 'updateProfile',
+  //     data: { action: 'save', profileData: { role: 'admin' } }
+  //   }).then(() => {
+  //     wx.hideLoading();
+  //     wx.showToast({ title: '已设为管理员', icon: 'success' });
+  //     wx.reLaunch({ url: '/pages/admin/admin' });
+  //   }).catch(() => {
+  //     wx.hideLoading();
+  //     wx.showToast({ title: '失败，请重试', icon: 'none' });
+  //   });
+  // }
 });

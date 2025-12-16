@@ -16,12 +16,27 @@ exports.main = async (event, context) => {
         avatarUrl: '',
         genderIndex: 0,
         signature: '我的运动，我做主！',
+        role: 'user',
         stats: { todaySteps: 0, weekDuration: 0, totalCheckIns: 0 },
         createTime: db.serverDate()
       }
       try { await col.add({ data: profile }) } catch (_) {}
     }
-  } catch (e) {}
-
-  return { code: 200, openid, data: { _openid: openid } }
+    // 如果系统还没有管理员，首个登录用户自动成为管理员（初始化引导）
+    try {
+      const adminCount = await col.where({ role: 'admin' }).count();
+      if ((adminCount && adminCount.total === 0) || (!adminCount && !res.data.length)) {
+        await col.where({ _openid: openid }).update({ data: { role: 'admin', updateTime: db.serverDate() } });
+      }
+    } catch (_) {}
+    const prof = await col.where({ _openid: openid }).limit(1).get()
+    let profile = prof.data[0] || { _openid: openid, role: 'user' }
+    if (!profile.role) {
+      try { await col.where({ _openid: openid }).update({ data: { role: 'user', updateTime: db.serverDate() } }) } catch(_) {}
+      profile.role = 'user'
+    }
+    return { code: 200, openid, data: profile }
+  } catch (e) {
+    return { code: 200, openid, data: { _openid: openid, role: 'user' } }
+  }
 }

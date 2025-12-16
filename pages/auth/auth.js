@@ -44,12 +44,24 @@ Page({
 
   // 2. 最终的路由分发：根据角色跳转到 index 或 admin
   finalRoute: function() {
-    const role = app.globalData.userInfo.role;
-    
-    if (role === 'admin') {
-      wx.reLaunch({ url: '/pages/admin/admin' })
-    } else {
-      wx.reLaunch({ url: '/pages/index/index' })
-    }
+    wx.cloud.callFunction({
+      name: 'updateProfile',
+      data: { action: 'fetch' }
+    }).then(res => {
+      const profile = (res.result && (res.result.profile || res.result.data)) || {};
+      const role = profile.role || (app.globalData.userInfo && app.globalData.userInfo.role) || 'user';
+      if (role === 'admin') {
+        wx.reLaunch({ url: '/pages/admin/admin' })
+      } else {
+        wx.reLaunch({ url: '/pages/index/index' })
+      }
+    }).catch(() => {
+      const role = (app.globalData.userInfo && app.globalData.userInfo.role) || 'user';
+      if (role === 'admin') {
+        wx.reLaunch({ url: '/pages/admin/admin' })
+      } else {
+        wx.reLaunch({ url: '/pages/index/index' })
+      }
+    })
   }
 })

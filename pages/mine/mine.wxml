@@ -74,6 +74,12 @@
 		<button class="util-btn" bindtap="goHealthDashboard">
 			<text class="icon">⚖️</text><text>健康档案</text>
 		</button>
+		<!-- <button class="util-btn" bindtap="goToAdmin">
+			<text class="icon">🛠️</text><text>管理员后台</text>
+		</button>
+		<button class="util-btn" bindtap="becomeAdmin">
+			<text class="icon">🔑</text><text>设为管理员（临时）</text>
+		</button> -->
 	</view>
 	
 </view>
