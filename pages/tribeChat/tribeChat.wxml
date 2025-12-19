@@ -5,10 +5,14 @@
       <view id="msg-{{item._id}}" class="message-item {{item.sender_id === openid ? 'self' : 'other'}}">
         <!-- 点击头像触发 @ -->
         <!-- 修复：简化逻辑，只判断是否有值且不含失效关键词，否则用默认图 -->
-        <image class="avatar" src="{{avatarMap[item.sender_id] || (item.sender_avatar && item.sender_avatar.length > 5 && item.sender_avatar.indexOf('default avatar.jpg') === -1 ? item.sender_avatar : '/assets/tips-icon.png')}}" 
-               bindtap="onAvatarTap" data-url="{{avatarMap[item.sender_id] || (item.sender_avatar && item.sender_avatar.length > 5 && item.sender_avatar.indexOf('default avatar.jpg') === -1 ? item.sender_avatar : '/assets/tips-icon.png')}}" data-name="{{item.sender_name}}" data-bot="{{item.sender_id === 'AI_BOT'}}"></image>
+        <image class="avatar"
+               src="{{avatarMap[item.sender_id] || (item.sender_avatar && item.sender_avatar.length > 5 && item.sender_avatar.indexOf('default avatar.jpg') === -1 ? item.sender_avatar : '/assets/tips-icon.png')}}"
+               bindtap="onAvatarTap"
+               data-url="{{avatarMap[item.sender_id] || (item.sender_avatar && item.sender_avatar.length > 5 && item.sender_avatar.indexOf('default avatar.jpg') === -1 ? item.sender_avatar : '/assets/tips-icon.png')}}"
+               data-name="{{nameMap[item.sender_id] || item.sender_name}}"
+               data-bot="{{item.sender_id === 'AI_BOT'}}"></image>
         <view>
-          <view class="nickname" wx:if="{{item.sender_id !== openid}}">{{item.sender_name}}</view>
+          <view class="nickname" wx:if="{{item.sender_id !== openid}}">{{nameMap[item.sender_id] || item.sender_name}}</view>
           <view class="content">{{item.content}}</view>
         </view>
       </view>

@@ -2,6 +2,8 @@
 <view class="home-container">
   
   <!-- 轮播图区域 -->
+  <!-- swiper:轮播图组件 indicator-dots：图下圆点 autoplay：自动播放
+  interval：间隔时间（毫秒）duration：切换时长（毫秒）-->
   <swiper class="banner-swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{3000}}" duration="{{500}}">
     <swiper-item wx:for="{{bannerList}}" wx:key="id">
       <image class="banner-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
@@ -22,6 +24,7 @@
     </view>
 
     <!-- 运动项目列表 -->
+    <!-- scroll-view：用于滚动区域 scroll-x横向滚动 -->
     <scroll-view class="sport-list" scroll-x="{{true}}">
       <view class="sport-item" wx:for="{{sportList}}" wx:key="id" bindtap="navigateToSportDetail" data-sport="{{item}}">
         <image class="sport-image" src="{{item.imageUrl}}" mode="aspectFill"></image>

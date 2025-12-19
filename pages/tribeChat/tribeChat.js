@@ -23,7 +23,8 @@ Page({
     tribeId: '',
     tribeName: '聊天室',
     messages: [],
-    avatarMap: {},
+    avatarMap: {},      // openid -> 头像
+    nameMap: {},        // openid -> 昵称（从 user_profiles 读取最新）
     inputText: '',
     openid: '',
     scrollTarget: '',
@@ -119,11 +120,19 @@ Page({
       const _ = db.command;
       const ids = Array.from(new Set((msgs || []).map(m => m.sender_id).filter(id => !!id && id !== 'AI_BOT' && !String(id).startsWith('mock_'))));
       if (ids.length === 0) return;
-      db.collection('user_profiles').where({ _openid: _.in(ids) }).field({ _openid: true, avatarUrl: true, nickname: true }).get()
+      db.collection('user_profiles')
+        .where({ _openid: _.in(ids) })
+        .field({ _openid: true, avatarUrl: true, nickname: true })
+        .get()
         .then(res => {
-          const map = { ...this.data.avatarMap };
-          (res.data || []).forEach(p => { if (p._openid) map[p._openid] = p.avatarUrl || map[p._openid] || ''; });
-          this.setData({ avatarMap: map });
+          const avatarMap = { ...this.data.avatarMap };
+          const nameMap = { ...this.data.nameMap };
+          (res.data || []).forEach(p => {
+            if (!p._openid) return;
+            avatarMap[p._openid] = p.avatarUrl || avatarMap[p._openid] || '';
+            nameMap[p._openid] = p.nickname || nameMap[p._openid] || '';
+          });
+          this.setData({ avatarMap, nameMap });
         })
         .catch(err => console.error('头像映射更新失败', err));
     } catch (e) {
