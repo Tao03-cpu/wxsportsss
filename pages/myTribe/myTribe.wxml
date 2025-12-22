@@ -1,26 +1,40 @@
 <!-- 页面：我的部落（myTribe） -->
 <view class="container">
-  
+
   <!-- 1. 头部按钮 -->
   <view class="header-actions" style="display: flex; justify-content: flex-end; padding-bottom: 10rpx;">
+  <!-- 跳转到tribeManage页面  bindtap:点击事件 -->
     <view class="link-btn" bindtap="goToManage">🔍 发现更多部落</view>
   </view>
 
   <!-- 2. 已加入的部落 -->
   <view class="section">
-    <view class="title">我的部落 <text class="tip">(长按可退出)</text></view>
-    
+    <view class="title">我的部落
+    <text class="tip">（长按可退出）
+    </text>
+  </view>
+    <!-- 如果用户已经加入部落 -->
     <block wx:if="{{myTribes.length > 0}}">
-      <view class="tribe-item" wx:for="{{myTribes}}" wx:key="_id" 
-            bindtap="enterChat" bindlongpress="onLongPressTribe"
+<!-- 遍历部落列表，wx:for 循环渲染部落 wx:key 提高渲染性能，使用数据库_id -->
+      <view class="tribe-item" wx:for="{{myTribes}}" wx:key="_id"
+         
+            bindtap="enterChat" 
+            
+            bindlongpress="onLongPressTribe"
+            
             data-id="{{item._id}}" data-name="{{item.name}}" data-role="{{item.myRole}}">
+        <!-- 部落图标 -->
         <view class="icon">
-          <image wx:if="{{item.logoUrl}}" src="{{item.logoUrl}}" mode="aspectFill" class="tribe-img"></image>
+        <!-- 如果有部落头像，显示图片 -->
+          <image wx:if="{{item.logoUrl}}" src="{{item.logoUrl}}" mode="aspectFill" class="tribe-img">
+          </image>
           <text wx:else>{{item.icon}}</text>
         </view>
+<!-- 部落信息 -->
         <view class="info">
           <view class="name">
             {{item.name}}
+             <!-- 显示我在部落中的角色（族长 / 成员） -->
             <text class="role-tag" wx:if="{{item.myRole}}">{{item.myRole}}</text>
           </view>
           <view class="desc">{{item.slogan || '暂无口号'}}</view>
@@ -37,11 +51,13 @@
   <!-- 3. 推荐部落 -->
   <view class="section">
     <view class="title">推荐部落</view>
+    <!-- 遍历推荐部落列表 -->
     <block wx:for="{{recommends}}" wx:key="id">
       <view class="tribe-item">
         <view class="icon">
           <text>{{item.icon}}</text>
         </view>
+        <!-- 推荐部落信息 -->
         <view class="info">
           <view class="name">{{item.name}}</view>
           <view class="desc">{{item.desc}}</view>

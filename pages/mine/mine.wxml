@@ -64,6 +64,23 @@
 		
 	</view>
 
+    <!-- 我的勋章 -->
+    <view class="stats-panel badges-panel">
+        <view class="panel-title">我的勋章</view>
+        <block wx:if="{{badgeDisplay && badgeDisplay.length}}">
+            <view class="badge-grid">
+                <block wx:for="{{badgeDisplay}}" wx:key="badge_id">
+                    <view class="badge-item {{item.owned ? '' : 'locked'}}" bindtap="onBadgeTap" data-item="{{item}}">
+                        <view class="badge-icon">{{item.icon || '🏅'}}</view>
+                        <view class="badge-name">{{item.name}}</view>
+                        <view class="badge-desc">{{item.desc}}</view>
+                    </view>
+                </block>
+            </view>
+        </block>
+        <view wx:else class="badge-empty">暂无勋章，去打卡/运动吧～</view>
+    </view>
+
 	<view class="action-buttons-row">
 		<button class="util-btn" bindtap="goToSettings">
 			<text class="icon">⚙️</text><text>设置</text>

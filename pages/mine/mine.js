@@ -27,6 +27,10 @@ Page({
     goals: { weeklyMin: 150 },
     goalMsg: '',
     todayCheckinDone: false,
+    badges: [],       // 已获勋章
+    newBadges: [],    // 本次解锁
+    badgeConfigs: [], // 全量勋章配置
+    badgeDisplay: []  // 用于前端展示（含锁定态）
   },
 
   onLoad: function () {
@@ -140,7 +144,7 @@ Page({
         },
         success: (res) => {
             if (res.result && res.result.code === 0) {
-                const { weeklyDuration, totalCheckins, checkedInDates } = res.result.data;
+                const { weeklyDuration, totalCheckins, checkedInDates, streakDays, badges = [], newBadges = [], badgeConfigs = [] } = res.result.data;
 
                 // 生成日历
                 const calendarDays = this.generateFullCalendar(currentYear, currentMonth, checkedInDates);
@@ -150,10 +154,18 @@ Page({
                 this.setData({
                     'userInfo.stats.week_duration': weeklyDuration,
                     'userInfo.stats.total_checkins': totalCheckins,
+                    'userInfo.stats.streak_days': streakDays || 0,
                     calendarDays: calendarDays,
                     calendarTitle: monthTitle,
-                    todayCheckinDone: todayDone
+                    todayCheckinDone: todayDone,
+                    badges: badges,
+                    newBadges: newBadges,
+                    badgeConfigs: badgeConfigs,
+                    badgeDisplay: this.mergeBadges(badgeConfigs, badges)
                 });
+                if (newBadges && newBadges.length > 0) {
+                  wx.showToast({ title: `解锁${newBadges.length}枚勋章`, icon: 'success' });
+                }
 
                 // 目标激励（周目标）
                 const msg = this.buildWeeklyGoalMsg(weeklyDuration);
@@ -177,6 +189,37 @@ Page({
             // wx.showToast({ title: '统计数据加载失败，请检查云函数', icon: 'none' });
         }
     });
+  },
+
+  // 组合全量勋章与已获得勋章，生成展示列表
+  mergeBadges(allConfigs = [], owned = []) {
+    const ownedIds = new Set((owned || []).map(b => b.badge_id));
+    return (allConfigs || []).map(c => ({
+      ...c,
+      owned: ownedIds.has(c.badge_id)
+    }));
+  },
+
+  onBadgeTap(e) {
+    const item = e.currentTarget.dataset.item;
+    if (!item) return;
+    const cond = this.formatCondition(item);
+    wx.showModal({
+      title: item.name || '勋章',
+      content: `${item.desc || ''}\n条件：${cond}`,
+      showCancel: false
+    });
+  },
+
+  formatCondition(item) {
+    if (!item) return '查看条件';
+    const { type, value } = item;
+    if (type === 'total') return `累计打卡 ≥ ${value} 天`;
+    if (type === 'streak') return `连续打卡 ≥ ${value} 天`;
+    if (type === 'week') return `单周运动时长 ≥ ${value} 分钟`;
+    if (type === 'day') return `单日运动时长 ≥ ${value} 分钟`;
+    if (type === 'chat') return `部落发言 ≥ ${value} 条`;
+    return '完成指定目标';
   },
 
   // 目标管理

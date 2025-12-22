@@ -22,6 +22,102 @@ exports.main = async (event, context) => {
   const monthStart = new Date(currentYear, currentMonth - 1, 1); // 本月1号零点
   const nextMonthStart = new Date(currentYear, currentMonth, 1); // 下月1号零点
 
+  // 勋章配置（首批上线）
+  const BADGES = [
+    { badge_id: 'total_5', type: 'total', value: 5, name: '坚持新手', desc: '累计打卡 5 天', icon: '🏅' },
+    { badge_id: 'total_15', type: 'total', value: 15, name: '小有成就', desc: '累计打卡 15 天', icon: '🎖️' },
+    { badge_id: 'total_30', type: 'total', value: 30, name: '习惯养成', desc: '累计打卡 30 天', icon: '🥇' },
+    { badge_id: 'total_60', type: 'total', value: 60, name: '长期主义', desc: '累计打卡 60 天', icon: '🏆' },
+    { badge_id: 'total_100', type: 'total', value: 100, name: '无畏达人', desc: '累计打卡 100 天', icon: '🌟' },
+    { badge_id: 'streak_7', type: 'streak', value: 7, name: '一周连击', desc: '连续打卡 7 天', icon: '🔥' },
+    { badge_id: 'streak_30', type: 'streak', value: 30, name: '月度铁人', desc: '连续打卡 30 天', icon: '⚡' },
+    { badge_id: 'week_150', type: 'week', value: 150, name: '周目标达人', desc: '单周运动 ≥150 分钟', icon: '💪' },
+    { badge_id: 'week_300', type: 'week', value: 300, name: '周强者', desc: '单周运动 ≥300 分钟', icon: '🏋️' },
+  ];
+
+  // 计算连续打卡天数
+  const computeStreakDays = (daySet) => {
+    if (!daySet || daySet.size === 0) return 0;
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const days = Array.from(daySet).sort((a, b) => b - a); // desc
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let streak = 0;
+    let expected = today.getTime();
+    for (let ts of days) {
+      if (ts === expected) {
+        streak += 1;
+        expected -= msPerDay;
+      } else if (ts < expected) {
+        // 遇到断档则停止
+        break;
+      }
+    }
+    return streak;
+  };
+
+  // 勋章判定
+  const grantBadges = async ({ openid, stats }) => {
+    const { totalCheckins = 0, streakDays = 0, weeklyDuration = 0 } = stats || {};
+    let owned = [];
+    try {
+      const res = await db.collection('user_badges').where({ _openid: openid }).limit(200).get();
+      owned = res.data || [];
+    } catch (_) {
+      owned = [];
+    }
+    const ownedIds = new Set((owned || []).map(b => b.badge_id));
+    const toGrant = [];
+    BADGES.forEach(b => {
+      let ok = false;
+      if (b.type === 'total' && totalCheckins >= b.value) ok = true;
+      if (b.type === 'streak' && streakDays >= b.value) ok = true;
+      if (b.type === 'week' && weeklyDuration >= b.value) ok = true;
+      if (ok && !ownedIds.has(b.badge_id)) {
+        toGrant.push(b);
+      }
+    });
+    // 写入新勋章
+    for (const b of toGrant) {
+      try {
+        await db.collection('user_badges').add({
+          data: {
+            _openid: openid,
+            badge_id: b.badge_id,
+            name: b.name,
+            desc: b.desc,
+            icon: b.icon || '',
+            grantedAt: new Date()
+          }
+        });
+      } catch (e) {
+        // 如果集合不存在尝试创建一次
+        if (String(e).includes('Collection not exists')) {
+          try { await db.createCollection('user_badges'); } catch (_) {}
+          await db.collection('user_badges').add({
+            data: {
+              _openid: openid,
+              badge_id: b.badge_id,
+              name: b.name,
+              desc: b.desc,
+              icon: b.icon || '',
+              grantedAt: new Date()
+            }
+          });
+        }
+      }
+    }
+    const allBadges = owned.concat(toGrant.map(b => ({
+      _openid: openid,
+      badge_id: b.badge_id,
+      name: b.name,
+      desc: b.desc,
+      icon: b.icon || '',
+      grantedAt: new Date()
+    })));
+    return { allBadges, newBadges: toGrant };
+  };
+
   try {
     // 3A. ❗ FIX: 查询当月所有打卡记录 (仅用于日历显示)
     const monthlyRecordsRes = await db.collection('checkin_records').where({
@@ -65,13 +161,29 @@ exports.main = async (event, context) => {
       d.setHours(0,0,0,0);
       daySet.add(d.getTime());
     });
+    const totalCheckins = daySet.size;
+    const streakDays = computeStreakDays(daySet);
+
+    // 勋章判定
+    const { allBadges, newBadges } = await grantBadges({
+      openid,
+      stats: {
+        totalCheckins,
+        streakDays,
+        weeklyDuration
+      }
+    });
     
     return {
         code: 0,
         data: {
             weeklyDuration: weeklyDuration,
-            totalCheckins: daySet.size,
+            totalCheckins: totalCheckins,
             checkedInDates: checkedInDates,
+            streakDays: streakDays,
+            badges: allBadges,
+            newBadges: newBadges,
+            badgeConfigs: BADGES
         }
     };
   } catch (e) {

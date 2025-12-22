@@ -1,14 +1,16 @@
 // pages/myTribe/myTribe.js
+// 全局初始化
 const app = getApp();
+//wx.cloud.database()：初始化云数据库实例，用于直接操作集合
 const db = wx.cloud.database();
 
 Page({
   data: {
-    myTribes: [],
-    recommends: [],
-    isLoading: true
+    myTribes: [],         //当前用户已加入的部落列表
+    recommends: [],       //推荐部落列表
+    isLoading: true       //页面加载状态控制，防止页面空白或重复请求
   },
-
+//页面生命周期，自动刷新
   onShow() {
     this.loadMyTribes();
   },
@@ -16,13 +18,13 @@ Page({
   // 从云端加载我加入的部落
   loadMyTribes() {
     this.setData({ isLoading: true });
-    
+//获取用户openid
     wx.cloud.callFunction({
       name: 'userLogin'
     }).then(loginRes => {
       // 兼容两种返回结构
       const openid = loginRes.result.openid || (loginRes.result.data && loginRes.result.data._openid);
-      
+      //查询用户部落关系
       db.collection('user_tribe').where({ _openid: openid }).get()
         .then(res => {
           const relations = res.data;
